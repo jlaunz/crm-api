@@ -9,20 +9,20 @@
 * `Jest` and `SuperTest`: Testing the endpoints
 
 ### Database implementation
-There are two tables: `Customer` and `Opportunity`. `Opportunity` records hold a `foreign` key to Customer record. To view and manipulate the DB, you can use `yarn prisma studio` after starting the application.
+There are two tables: `Customer` and `Opportunity`. `Opportunity` records hold a `foreign` key to Customer record. To view and manipulate the DB, you can use `yarn prisma studio` after starting the application.  
 **Modelling Assumptions**: 
-* in `Customer` table, except the auto-increment id field, email is also unique field 
-* there is a `Prisma` module that handles the communication between the application and the DB. The migration script can be found in `file://./db/schema.prisma
+* in `Customer` table, except the auto-increment id field, email is also unique field  
+* there is a `Prisma` module that handles the communication between the application and the DB. The migration script can be found in `file://./db/schema.prisma  
 
 
   ### Endpoints
-  Endpoints are defined in `crm.service.ts`. You can filter the customers by using `GET /customer` and query parameters. 
+  Endpoints are defined in `crm.service.ts`. You can filter the customers by using `GET /customer` and query parameters.   
   To test and view the endpoints (Swagger UI), please start the server and then visit `http://localhost:8000/api`
 
   ### Open API Doc
-  The YAML file can be found in `file://./swagger/api.yaml`
-  To check Swagger UI, please start the server and visit `http://localhost:8000/api`
-  To generate Swagger API doc, please visit `http://localhost:8000/api-yaml`
+  The YAML file can be found in `file://./swagger/api.yaml`  
+  To check Swagger UI, please start the server and visit `http://localhost:8000/api`  
+  To generate Swagger API doc, please visit `http://localhost:8000/api-yaml`  
 
 
 
@@ -44,15 +44,16 @@ $ yarn start:dev
 ```
 
 **Note**: 
-    **Env variables are included in the repo for simplifying the process**
-    **If you are using windows, please go to `package.json`, find the `sleep 1` and replace it with `timeout /t 1`**
+    **Env variables are included in the repo for simplifying the process.**  
+    **If you are using windows, please go to `package.json`, find the `sleep 1` and replace it with `timeout /t 1`**  
 
 ### About the Yarn scripts
 `yarn db:dev:restart`: Docker will pull the required image and setup the postgres SQL container. After that, migration scripts will be executed and mock data will be populated. 
 
 `yarn start:dev`: start the application. The application runs on `8000`, and watches for any file changes.
 
-Note: Restarting the container will clear all existing data.
+**Note**
+Restarting the container will clear all existing data.
 
 
 
