@@ -1,0 +1,239 @@
+openapi: 3.0.0
+paths:
+  /customers:
+    get:
+      operationId: CrmController_queryCustomer
+      parameters:
+        - name: name
+          required: false
+          in: query
+          description: Find customers whose name contains provided string.
+          schema:
+            type: string
+        - name: email
+          required: false
+          in: query
+          description: Find customers by email
+          schema:
+            type: string
+        - name: createdFrom
+          required: false
+          in: query
+          description: >-
+            Format: yyyy-mm-dd. Find customers that are created after the
+            provided date
+          schema:
+            type: string
+        - name: createdBefore
+          required: false
+          in: query
+          description: >-
+            Format: yyyy-mm-dd. Find customers who are created before the
+            provided date
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: customer status.
+          schema:
+            enum:
+              - ACTIVE
+              - NON_ACTIVE
+              - LEAD
+            type: string
+      responses:
+        '200':
+          description: Customers fetched successfully
+    post:
+      operationId: CrmController_createCustomer
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerDto'
+      responses:
+        '201':
+          description: Customers created successfully
+        '400':
+          description: mal-formatted payload
+        '403':
+          description: Forbidden
+  /customers/{id}:
+    patch:
+      operationId: CrmController_updateCustomer
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerDto'
+      responses:
+        '200':
+          description: Customers updated successfully
+        '400':
+          description: >-
+            Unable to update Customers info. the request body could contain
+            mal-formatted data
+  /opportunities:
+    get:
+      operationId: CrmController_queryOpportunity
+      parameters:
+        - name: name
+          required: false
+          in: query
+          description: opportunity name
+          schema:
+            type: string
+        - name: customerId
+          required: false
+          in: query
+          description: customer id
+          schema:
+            type: number
+        - name: status
+          required: false
+          in: query
+          description: opportunity status.
+          schema:
+            enum:
+              - NEW
+              - CLOSED_WON
+              - CLOSED_LOST
+            type: string
+      responses:
+        '200':
+          description: Opportunities fetched successfully
+    post:
+      operationId: CrmController_createOpportunity
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOpportunityDto'
+      responses:
+        '201':
+          description: Opportunity created successfully
+        '400':
+          description: mal-formatted payload
+        '403':
+          description: Forbidden
+  /opportunities/{id}:
+    patch:
+      operationId: CrmController_updateOpportunity
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOpportunityDto'
+      responses:
+        '200':
+          description: Opportunity updated successfully
+        '400':
+          description: Bad request
+info:
+  title: John's CRM API
+  description: ''
+  version: 0.1.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    CreateCustomerDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Customer first name
+        email:
+          type: string
+          description: Customer first name
+        addressLines:
+          type: string
+          description: Customer address
+        postcode:
+          type: string
+          description: Customer post code
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - NON_ACTIVE
+            - LEAD
+          description: customer status.
+      required:
+        - name
+        - email
+        - addressLines
+        - postcode
+        - status
+    UpdateCustomerDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Customer first name
+        addressLines:
+          type: string
+          description: Customer address
+        postcode:
+          type: string
+          description: Customer post code
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - NON_ACTIVE
+            - LEAD
+          description: customer status.
+    CreateOpportunityDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Opportunity name
+        customerId:
+          type: number
+          description: Customer id
+        status:
+          type: string
+          enum:
+            - NEW
+            - CLOSED_WON
+            - CLOSED_LOST
+          description: opportunity status.
+      required:
+        - name
+        - customerId
+        - status
+    UpdateOpportunityDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: update opportunity name
+        status:
+          type: string
+          enum:
+            - NEW
+            - CLOSED_WON
+            - CLOSED_LOST
+          description: opportunity status.

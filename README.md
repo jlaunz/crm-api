@@ -1,73 +1,73 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# John's technical exercise project
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
+### Tech Stack:
+* `Nest.js`: Backend framework.
+* `Prisma` ORM for the databse
+* `Docker` for running the databases in containers
+* `Swagger`: Used for automatically generating the API docs and provide interactive UI for API testing. To view the swagger UI, after starting the application, visit http://localhost:8000/api
+* `Jest` and `SuperTest`: Testing the endpoints
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Database implementation
+There are two tables: Customer and Opportunity. Opportunity records hold a foreign key to Customer record.
+  *Assumptions*: 
+* in `Customer` table, except the auto-increment id field, email is also unique field 
+* there is a `Prisma` module that handles the communication between the application and the DB. The migration script can be found in `file://./db/schema.prisma
 
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+  ### Endpoints
+  To view and test the endpoints, please start the server and visit `http://localhost:8000/api`
 
-## Installation
+  ### Open API Doc
+  The YAML file can be found in `file://./swagger/api.yaml`
+  To check Swagger UI, please start the server and visit `http://localhost:8000/api`
 
-```bash
-$ npm install
+  To generate Swagger API doc, please visit `http://localhost:8000/api-yaml`
+
+
+
+## Key Dependencies
+
+This application has dependencies on the following, make sure each is installed locally for development and automated testing:
+
+* Node.js
+* PostgreSQL
+* Docker
+
+
+## Starting the Server
+
+```
+$ yarn
+$ yarn db:dev:restart
+$ yarn start:dev
 ```
 
-## Running the app
+**Note: If you are using windows, please go to `package.json`, find the `sleep 1` and replace it with `timeout /t 1`**
 
-```bash
-# development
-$ npm run start
+### Yarn Script Explaination
+`yarn db:dev:restart`: Docker will pull the required image and setup the postgres SQL container. After that, migration scripts will be executed and mock data will be populated. 
 
-# watch mode
-$ npm run start:dev
+`yarn start:dev`: start the application. The application runs on `8000`, and watches for any file changes.
 
-# production mode
-$ npm run start:prod
+Note: Restarting the container will clear all existing data.
+
+
+
+## Starting the Testing
+
+```
+$ yarn pretest:e2e
+$ yarn test:e2e
 ```
 
-## Test
+Note: If you are using windows, please go to package.json, find the `sleep 1` and replace it with `timeout /t 1`
 
-```bash
-# unit tests
-$ npm run test
+### Yarn Script Explaination
+`yarn pretest:e2e`:  Docker will setup a different DB container for automated testing. After that, migration scripts will be executed and mock data will be populated.
 
-# e2e tests
-$ npm run test:e2e
+`yarn test:e2e`: Test code will be executed.
 
-# test coverage
-$ npm run test:cov
-```
+Note: that port `8003` will be used. and jest will watche for any test file changes.
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
